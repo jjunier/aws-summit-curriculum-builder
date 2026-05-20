@@ -63,6 +63,21 @@ function duration(session) {
   return Math.max(0, toMinutes(session.end) - toMinutes(session.start));
 }
 
+function formatDuration(minutes) {
+  if (minutes < 60) {
+    return `${minutes}분`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  if (remainingMinutes === 0) {
+    return `${hours}시간`;
+  }
+
+  return `${hours}시간 ${remainingMinutes}분`;
+}
+
 function dateLabel(date) {
   return date === "2026-05-20" ? "5월 20일" : "5월 21일";
 }
@@ -268,7 +283,7 @@ function renderSchedule() {
 
   const total = selectedSessions.reduce((sum, session) => sum + duration(session), 0);
   $("selectedCount").textContent = selectedSessions.length + "개";
-  $("totalMinutes").textContent = total + "분";
+  $("totalMinutes").textContent = formatDuration(total);
   $("conflictCount").textContent = conflictIds.size + "개 세션";
 
   if (conflictIds.size > 0) {
