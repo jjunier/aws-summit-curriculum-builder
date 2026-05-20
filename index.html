@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AWS Summit Seoul 2026 | 2-Day DE Curriculum Builder</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header>
+    <section class="hero">
+      <div class="card hero-main">
+        <div class="eyebrow">AWS Summit Seoul 2026 · 5월 20일 & 21일</div>
+        <h1>나만의 AWS Summit Seoul 2026 일정 만들기</h1>
+        <p>
+          AWS Summit Seoul 2026의 5월 20일 Industry Day와 5월 21일 AI Day 세션을 직접 조합해
+          개인 맞춤형 참석 커리큘럼 빌더입니다.
+        </p>
+        <p>
+          듣고 싶은 강연을 추가하면 시간표에 자동으로 반영되며,
+          세션 간 시간 충돌을 확인하면서 자신에게 가장 적합한 참여 플랜을 구성할 수 있습니다.
+        </p>
+      </div>
+      <aside class="card summary">
+        <div class="metric"><span>선택한 세션</span><span id="selectedCount">0개</span></div>
+        <div class="metric"><span>총 수강 시간</span><span id="totalMinutes">0분</span></div>
+        <div class="metric"><span>시간 충돌</span><span id="conflictCount">0개 세션</span></div>
+      </aside>
+    </section>
+  </header>
+
+  <main>
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">세션 목록</h2>
+          <div class="small">날짜, 난이도, 주제, 키워드로 필터링한 뒤 일정에 추가하세요.</div>
+        </div>
+        <button class="btn-ghost" id="resetFilters">필터 초기화</button>
+      </div>
+
+      <div class="controls">
+        <input id="searchInput" class="input" type="search" placeholder="세션명, 코드, 발표 주체 검색" />
+        <div class="grid3">
+          <select id="dayFilter" class="select">
+            <option value="all">전체 날짜</option>
+            <option value="2026-05-20">5월 20일</option>
+            <option value="2026-05-21">5월 21일</option>
+          </select>
+          <select id="difficultyFilter" class="select">
+            <option value="all">전체 난이도</option>
+            <option>Foundational</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+            <option>Expert</option>
+          </select>
+          <select id="topicFilter" class="select">
+            <option value="all">전체 주제</option>
+            <option value="Data">Data / AI-ready data</option>
+            <option value="Platform">Platform / Infra</option>
+            <option value="Ops">Ops / Observability</option>
+            <option value="Security">Security / Governance</option>
+            <option value="Career">Career / Community</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="session-list" id="sessionList"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">나의 2일 커리큘럼</h2>
+          <div class="small">09:30부터 17:00까지, 날짜별 타임 블록으로 시각화합니다.</div>
+        </div>
+        <button class="btn-danger" id="clearSchedule">전체 제거</button>
+      </div>
+
+      <div class="toolbar">
+        <div class="legend">
+          <span><i class="dot" style="background:#2563eb"></i> Data</span>
+          <span><i class="dot" style="background:#059669"></i> Platform</span>
+          <span><i class="dot" style="background:#7c3aed"></i> Ops</span>
+          <span><i class="dot" style="background:#dc2626"></i> Security</span>
+          <span><i class="dot" style="background:#d97706"></i> Career</span>
+        </div>
+        <div class="toolbar-group">
+          <button class="btn-ghost" id="themeToggle" type="button">다크 모드</button>
+          <button class="btn-primary" id="loadRecommended1" type="button">추천 커리큘럼 1</button>
+          <button class="btn-secondary-accent" id="loadRecommended2" type="button">추천 커리큘럼 2</button>
+          <button class="btn-ghost" id="exportJson" type="button">JSON 내보내기</button>
+          <button class="btn-ghost" id="exportCsv" type="button">CSV 내보내기</button>
+        </div>
+      </div>
+
+      <div class="notice" id="conflictNotice"></div>
+
+      <div class="table-wrap">
+        <div class="timetable">
+          <div class="time-axis" id="timeAxis"></div>
+          <div class="day-col" id="day20"><div class="day-head">5월 20일</div></div>
+          <div class="day-col" id="day21"><div class="day-head">5월 21일</div></div>
+        </div>
+      </div>
+
+      <div class="selected-list" id="selectedList"></div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
